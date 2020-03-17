@@ -1,0 +1,111 @@
+2020-03-04 20:44:08 [com.inspur.hw.UpdateRru {Num}] [com.inspur.hw.UpdateRru.main(UpdateRru.java:41)] [ main:0 ] - [ INFO ]  test
+2020-03-04 20:44:08 [com.inspur.hw.UpdateRru {Num}] [com.inspur.hw.UpdateRru.main(UpdateRru.java:42)] [ main:0 ] - [ DEBUG ]  test1
+2020-03-05 16:08:11[ INFO ]test
+2020-03-05 16:09:48[ INFO ]test
+2020-03-05 16:11:44[ INFO ]test
+2020-03-05 16:11:55[ INFO ]test
+2020-03-05 17:00:07[ INFO ]test
+2020-03-06 09:30:40[ INFO ]输入的参数为:{start_time=2020-03-05, province_id=130}
+2020-03-06 09:30:40[ INFO ]-----------------------------------------------------------------------------------
+2020-03-06 09:30:40[ INFO ]-------处理省份：130，厂家：2，网元类型：RRU，处理数据的时间为：2020-03-05 数据中-----
+2020-03-06 09:30:43[ INFO ]数据库连接成功
+2020-03-06 09:30:43[ INFO ]执行查询RRU信息的SQL为：SELECT A.OID, A.LONGITUDE, A.LATITUDE, A.GNBID, B.CITYCODE  FROM PARA_RRU_NG_ALL A,       (SELECT GNBID, CITYCODE          FROM PARA_GNB_NG_ALL         WHERE START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')           AND PROVINCE_ID = 130           AND VENDOR_ID = 2) B WHERE A.PROVINCE_ID = 130   AND A.VENDOR_ID = 2   AND A.START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')   AND A.GNBID = B.GNBID
+2020-03-06 09:31:28[ INFO ]查询完毕，正在对数据进行处理：
+2020-03-06 09:31:28[ INFO ]获取的RRU数据条数有：21
+2020-03-06 09:31:28[ INFO ]执行查询地级市个数的SQL为：SELECT CITYCODE,COUNT(*) FROM (SELECT A.OID, A.LONGITUDE, A.LATITUDE, A.GNBID, B.CITYCODE  FROM PARA_RRU_NG_ALL A,       (SELECT GNBID, CITYCODE          FROM PARA_GNB_NG_ALL         WHERE START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')           AND PROVINCE_ID = 130           AND VENDOR_ID = 2) B WHERE A.PROVINCE_ID = 130   AND A.VENDOR_ID = 2   AND A.START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')   AND A.GNBID = B.GNBID) GROUP BY citycode
+2020-03-06 09:31:28[ INFO ]地市个数为：1
+2020-03-06 09:31:28[ INFO ]地市列表为：[00000]
+2020-03-06 09:31:28[ INFO ]判断该省份，该厂家，该网元是否存在物理点数据，SQL为：SELECT count(*)  FROM PARA_PHYSICALPOINT_NG_NEWEST WHERE PROVINCE_ID = 130   AND VENDOR_ID = 2   AND TYPE = 'RRU'
+2020-03-06 09:31:31[ INFO ]不存在物理点，进行第一次创建操作！
+2020-03-06 09:31:31[ INFO ]第一次按照地市列表进行物理点进行判定处理：
+2020-03-06 09:31:31[ INFO ]第1次开始执行，正在处理00000地市
+2020-03-06 09:31:31[ INFO ]00000包含的物理点个数为：13
+2020-03-06 09:31:31[ INFO ]插入前先删除，SQL为：DELETE FROM PARA_PHYSICALPOINT_NG  WHERE PROVINCE_ID = 130    AND VENDOR_ID = 2    AND START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')    AND TYPE = 'RRU'
+2020-03-06 09:31:31[ INFO ]删除的数据条数为：12
+2020-03-06 09:31:31[ INFO ]插入数据的SQL为：INSERT INTO para_physicalpoint_ng(oid,province_id,citycode,type,type_num,type_oid_list,type_oid_base,vendor_id,start_time,longitude,latitude,scan_seq)
+VALUES(?,?,?,?,?,?,?,?,TO_DATE(?,'yyyy-mm-dd'),?,?,?)
+2020-03-06 09:31:31[ INFO ]地市为空，为字符串的情况，统一为-1地市
+2020-03-06 09:31:32[ INFO ]异常物理点的信息为：PhysicalPoint{oid='RRU_00000_-180.0_-90.0', province_id='130', citycode='00000', type='RRU', type_num='6', type_oid_list='130_505025_1_52_505025|130_505025_1_51_505025|130_5574654_1_11_5574654|130_5541885_1_11_5541885|130_5541886_1_11_5541886|130_5541887_1_11_5541887', type_oid_base='130_505025_1_52_505025', vendor_id='2', start_time='2020-03-05', longitude='-180.0', latitude='-90.0', insert_time=Fri Mar 06 09:31:31 CST 2020, scan_seq=6}
+2020-03-06 09:31:32[ INFO ]数据插入完毕，插入13条。
+2020-03-06 09:31:32[ INFO ]维护最新物理表数据。
+2020-03-06 09:31:32[ INFO ]插入前先删除，SQL为：DELETE FROM PARA_PHYSICALPOINT_NG_NEWEST  WHERE PROVINCE_ID = 130    AND VENDOR_ID = 2    AND TYPE = 'RRU'
+2020-03-06 09:31:32[ INFO ]删除的数据条数为：0
+2020-03-06 09:31:32[ INFO ]插入数据的SQL为：INSERT INTO PARA_PHYSICALPOINT_NG_NEWEST     SELECT *       FROM PARA_PHYSICALPOINT_NG  WHERE PROVINCE_ID = 130    AND VENDOR_ID = 2    AND START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')    AND TYPE = 'RRU'
+2020-03-06 09:31:32[ INFO ]插入的数据条数为：12
+2020-03-06 09:31:33[ INFO ]--------省份：130，厂家：2，网元类型：RRU，处理数据的时间为：2020-03-05 处理完毕-------
+2020-03-06 09:31:33[ INFO ]-----------------------------------------------------------------------------------
+2020-03-06 09:31:33[ INFO ]输入的参数为:{start_time=2020-03-05, province_id=130}
+2020-03-06 09:31:33[ INFO ]执行完毕
+2020-03-06 09:39:09[ INFO ]输入的参数为:{start_time=2020-03-05, province_id=130}
+2020-03-06 09:39:09[ INFO ]-----------------------------------------------------------------------------------
+2020-03-06 09:39:09[ INFO ]-------处理省份：130，厂家：2，网元类型：RRU，处理数据的时间为：2020-03-05 数据中-----
+2020-03-06 09:39:13[ INFO ]数据库连接成功
+2020-03-06 09:39:13[ INFO ]执行查询RRU信息的SQL为：SELECT A.OID, A.LONGITUDE, A.LATITUDE, A.GNBID, B.CITYCODE  FROM PARA_RRU_NG_ALL A,       (SELECT GNBID, CITYCODE          FROM PARA_GNB_NG_ALL         WHERE START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')           AND PROVINCE_ID = 130           AND VENDOR_ID = 2) B WHERE A.PROVINCE_ID = 130   AND A.VENDOR_ID = 2   AND A.START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')   AND A.GNBID = B.GNBID
+2020-03-06 09:39:13[ INFO ]查询完毕，正在对数据进行处理：
+2020-03-06 09:39:14[ INFO ]获取的RRU数据条数有：21
+2020-03-06 09:39:14[ INFO ]执行查询地级市个数的SQL为：SELECT CITYCODE,COUNT(*) FROM (SELECT A.OID, A.LONGITUDE, A.LATITUDE, A.GNBID, B.CITYCODE  FROM PARA_RRU_NG_ALL A,       (SELECT GNBID, CITYCODE          FROM PARA_GNB_NG_ALL         WHERE START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')           AND PROVINCE_ID = 130           AND VENDOR_ID = 2) B WHERE A.PROVINCE_ID = 130   AND A.VENDOR_ID = 2   AND A.START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')   AND A.GNBID = B.GNBID) GROUP BY citycode
+2020-03-06 09:39:14[ INFO ]地市个数为：1
+2020-03-06 09:39:14[ INFO ]地市列表为：[00000]
+2020-03-06 09:39:14[ INFO ]判断该省份，该厂家，该网元是否存在物理点数据，SQL为：SELECT count(*)  FROM PARA_PHYSICALPOINT_NG_NEWEST WHERE PROVINCE_ID = 130   AND VENDOR_ID = 2   AND TYPE = 'RRU'
+2020-03-06 09:39:14[ INFO ]存在物理点，进行更新操作！
+2020-03-06 09:39:14[ INFO ]获取最新的物理点数据，SQL为：SELECT *  FROM PARA_PHYSICALPOINT_NG_NEWEST WHERE PROVINCE_ID = 130   AND VENDOR_ID = 2   AND TYPE = 'RRU'
+2020-03-06 09:39:14[ INFO ]获取最新每个地市包含的物理点个数，SQL为：SELECT citycode,COUNT(*) FROM PARA_PHYSICALPOINT_NG_NEWEST WHERE PROVINCE_ID = 130   AND VENDOR_ID = 2   AND TYPE = 'RRU'   GROUP BY citycode
+2020-03-06 09:39:14[ INFO ]00000地市最新的物理点个数为：12
+2020-03-06 09:39:14[ INFO ]按照地市列表进行物理点进行更新处理：
+2020-03-06 09:39:14[ INFO ]第1次开始执行，正在处理00000地市
+2020-03-06 09:39:14[ INFO ]本日新增的不属于任何物理点的RRU个数为：21
+2020-03-06 09:39:14[ INFO ]对新增的网元进行增加物理点处理：
+2020-03-06 09:39:14[ INFO ]地市00000新增的物理点个数为：13
+2020-03-06 09:39:14[ INFO ]插入前先删除，SQL为：DELETE FROM PARA_PHYSICALPOINT_NG  WHERE PROVINCE_ID = 130    AND VENDOR_ID = 2    AND START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')    AND TYPE = 'RRU'
+2020-03-06 09:39:14[ INFO ]删除的数据条数为：12
+2020-03-06 09:39:14[ INFO ]插入数据的SQL为：INSERT INTO para_physicalpoint_ng(oid,province_id,citycode,type,type_num,type_oid_list,type_oid_base,vendor_id,start_time,longitude,latitude,scan_seq)
+VALUES(?,?,?,?,?,?,?,?,TO_DATE(?,'yyyy-mm-dd'),?,?,?)
+2020-03-06 09:39:14[ INFO ]地市为空，为字符串的情况，统一为-1地市
+2020-03-06 09:39:15[ INFO ]数据插入完毕，插入13条。
+2020-03-06 09:39:15[ INFO ]维护最新物理表数据。
+2020-03-06 09:39:15[ INFO ]插入前先删除，SQL为：DELETE FROM PARA_PHYSICALPOINT_NG_NEWEST  WHERE PROVINCE_ID = 130    AND VENDOR_ID = 2    AND TYPE = 'RRU'
+2020-03-06 09:39:15[ INFO ]删除的数据条数为：12
+2020-03-06 09:39:15[ INFO ]插入数据的SQL为：INSERT INTO PARA_PHYSICALPOINT_NG_NEWEST     SELECT *       FROM PARA_PHYSICALPOINT_NG  WHERE PROVINCE_ID = 130    AND VENDOR_ID = 2    AND START_TIME = TO_DATE('2020-03-05', 'yyyy-mm-dd')    AND TYPE = 'RRU'
+2020-03-06 09:39:15[ INFO ]插入的数据条数为：13
+2020-03-06 09:39:15[ INFO ]--------省份：130，厂家：2，网元类型：RRU，处理数据的时间为：2020-03-05 处理完毕-------
+2020-03-06 09:39:15[ INFO ]-----------------------------------------------------------------------------------
+2020-03-06 09:39:15[ INFO ]输入的参数为:{start_time=2020-03-05, province_id=130}
+2020-03-06 09:39:15[ INFO ]执行完毕
+2020-03-06 11:21:12[ INFO ]test
+2020-03-06 11:21:45[ INFO ]test
+2020-03-10 18:33:08[ INFO ]test
+2020-03-10 18:33:19[ INFO ]test
+2020-03-11 11:38:56[ INFO ]test
+2020-03-11 15:40:52[ INFO ]test
+2020-03-11 15:41:09[ INFO ]test
+2020-03-11 15:42:26[ INFO ]test
+2020-03-11 15:42:32[ INFO ]test
+2020-03-12 10:31:51[ INFO ]test
+2020-03-12 10:32:21[ INFO ]test
+2020-03-12 17:00:43[ INFO ]test
+2020-03-12 17:01:30[ INFO ]test
+2020-03-12 17:01:40[ INFO ]test
+2020-03-13 10:59:59[ INFO ]test
+2020-03-13 11:02:07[ INFO ]test
+2020-03-13 11:02:50[ INFO ]test
+2020-03-13 11:03:05[ INFO ]test
+2020-03-13 11:07:32[ INFO ]test
+2020-03-13 11:07:46[ INFO ]test
+2020-03-13 11:08:06[ INFO ]test
+2020-03-13 11:19:32[ INFO ]test
+2020-03-13 11:22:00[ INFO ]test
+2020-03-13 15:12:54[ INFO ]test
+2020-03-13 15:13:55[ INFO ]test
+2020-03-13 15:18:30[ INFO ]test
+2020-03-13 15:29:21[ INFO ]test
+2020-03-13 15:29:42[ INFO ]test
+2020-03-13 15:30:09[ INFO ]test
+2020-03-13 15:51:06[ INFO ]test
+2020-03-13 15:51:25[ INFO ]test
+2020-03-13 15:51:53[ INFO ]test
+2020-03-13 15:52:25[ INFO ]test
+2020-03-14 17:32:14[ INFO ]test
+2020-03-14 17:35:29[ INFO ]test
+2020-03-16 09:19:38[ INFO ]test
+2020-03-16 09:20:55[ INFO ]test
+2020-03-16 09:24:58[ INFO ]test
